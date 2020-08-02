@@ -26,6 +26,8 @@ def create_report(file, folder):
         osint_header = ""
         for line in full_comment_txt[1:5]:
             osint_header += line
+        osint_header = osint_header.replace('\t', '\t\t')
+        osint_header = osint_header.replace('Filename:\t\t', 'Filename:\t')
 
         osint_comment = ""
         for line in full_comment_txt[8:]:
