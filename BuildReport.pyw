@@ -21,9 +21,15 @@ def create_report(file, folder):
         full_scr_file = os.path.join(folder, scr_file)
 
         with open(full_comment_file, 'r') as f:
-            msg = f.read()
-        msg = msg.replace('\t', '\t\t')
-        msg = msg.replace('Filename:\t\t', 'Filename:\t')
+            full_comment_txt = f.readlines()
+
+        osint_header = ""
+        for line in full_comment_txt[1:5]:
+            osint_header += line
+
+        osint_comment = ""
+        for line in full_comment_txt[8:]:
+            osint_comment += line
 
 
         ### Create WORD content
@@ -31,7 +37,9 @@ def create_report(file, folder):
         document.add_heading(hdr, level=1)
         document.add_picture(full_scr_file, width=Inches(4.50))
         document.add_heading('Basic screenshot information:', level=2)
-        document.add_paragraph(msg[29:])
+        document.add_paragraph(osint_header)
+        document.add_heading('OSINT Comment:', level=2)
+        document.add_paragraph(osint_comment)
         document.add_page_break()
 
         # Add 1 to the screenshot counter
